@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Image Name{% endblock %}
+
+{% block content %}
+<!-- <h3>Your Uploaded Image Name is:</h3> -->
+{% if image_data != '' %}
+<h3>Captured Image</h3>
+    <span>{{ image_data }}</span>
+ {% endif %}
+{% endblock %}
