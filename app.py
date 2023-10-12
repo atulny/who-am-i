@@ -61,6 +61,9 @@ def protected():
 @app.route('/')
 def upload():
     return render_template('capture.html',filename='')
+@app.route('/upload' , methods=['GET'] )
+def upload_img():
+    return render_template('upload.html')
 
 #capture route to capture image from camera, save it to UPLOAD_FOLDER and then render it on the same page
 @app.route('/capture' , methods=['GET','POST'] )
@@ -68,6 +71,7 @@ def capture():
     filename=''     # using filename variable to display video feed and captured image alternatively on the same page
     image_data_url = request.form.get('image')
     if request.method == 'POST':
+
         # Decode the base64 data URL to obtain the image data
         #image_data = base64.b64decode(image_data_url.split(',')[1])
         print("posted --------------------")
@@ -109,11 +113,20 @@ def upload_image():
         file = request.files['image']
 
         image_data_url = base64.b64encode(file.read())
+        # decoded_image = base64.b64decode(image_data_url)
+        sample_string =  'data:image/jpeg;base64,'+image_data_url.decode("ascii")
+        #image = sample_string.split('\'')[1]
         print("posted --------------------")
-        objs = DeepFace.analyze(img_path=image_data_url, enforce_detection=False,
+        objs = DeepFace.analyze(img_path=sample_string, enforce_detection=False,
                                 actions=('age', 'gender', 'race', 'emotion')
                                 )
-        image_result = json.dumps(objs)
+        if objs:
+            objs=objs[0]
+        try:
+            del objs["region"]
+        except:
+            pass
+        image_result = json.dumps(objs, indent=2)
         # if user does not select file, browser also submit an empty part without filename
         # if file.filename == '':
         #     error_message = 'image not selected'
@@ -134,7 +147,7 @@ def upload_image():
         #         print('Image successfully uploaded')
         #         return redirect(url_for('image', filename=filename))
 
-        return render_template('image2.html', image_data=image_result)
+        return render_template('image2.html', image_data=image_result, image_data_url=sample_string)
 
         #return render_template('upload.html', error_message=error_message)
 

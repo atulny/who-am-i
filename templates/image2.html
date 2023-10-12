@@ -6,6 +6,8 @@
 <!-- <h3>Your Uploaded Image Name is:</h3> -->
 {% if image_data != '' %}
 <h3>Captured Image</h3>
-    <span>{{ image_data }}</span>
+<img style='display:block; width:500px;height:auto;' id='base64image'
+       src='{{ image_data_url }}' />
+    <pre style="text-align: left">{{ image_data }}</pre>
  {% endif %}
 {% endblock %}
