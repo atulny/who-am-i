@@ -85,6 +85,9 @@ def capture():
             del objs["region"]
         except:
             pass
+        if objs and "emotion" in objs:
+            objs["emotion (based on facial Expression)"] = objs["emotion"]
+            del objs["emotion"]
         image_result = json.dumps(objs,indent=2)
         # Create an image from the decoded data
         # img = Image.open(BytesIO(image_data))
@@ -126,6 +129,9 @@ def upload_image():
             del objs["region"]
         except:
             pass
+        if objs and "emotion" in objs:
+            objs["emotion (based on facial Expression)"] = objs["emotion"]
+            del objs["emotion"]
         image_result = json.dumps(objs, indent=2)
         # if user does not select file, browser also submit an empty part without filename
         # if file.filename == '':
