@@ -7,12 +7,14 @@
 
 {% block content %}
         <div>
-            <h3>Upload an Image</h3>
+            <h3>Who am I ?</h3>
         </div>
   <a href="/capture"> Capture Image</a>
-    <br/>
+            <h4>Select an Image</h4>
+<br/>
+<br/>
         <div class="--display --w-100 --h-40">
-            <form class="--display --w-60 --h-100" method="POST" enctype="multipart/form-data" action="/upload">
+            <form class="--display --w-60 --h-100" method="POST" onsubmit="captureButton.textContent='Processing ...'" enctype="multipart/form-data" action="/upload">
                 <div class="choose-file">
                     <input type="file" name="image" id="file-input" accept="image/*" required />
                     <div id="file-name-display"></div>
@@ -20,24 +22,31 @@
                 <div class="--display --dim">
                     <label for="file-input" class="input-file --display -dim-2">
                         <span class="file-input-label">&plus;</span>
+                        <img id="selected_img_for_upload" src="/static/portrait.jpg" alt=""/>
                     </label>
                 </div>
                 <div class="submit --display">
-                    <input id="submit-btn" type="submit" value="Submit" />
-                    <label for="submit-btn" class="-btn">
-                        <span>Submit</span>
-                    </label>
+                                <button id="captureButton" class="-btn">Submit</button>
+
+
                 </div>
             </form>
         </div>
         <div>
             <h4>{{ error_message }}</h4>
         </div>
-
+<div class="footer">
+    The content collected here is only used for analysis and is not saved, persisted or distributed in any shape or form.
+</div>
         <script>
             document.querySelector("#file-input").addEventListener("change", function () {
                 const fileNameDisplay = document.querySelector("#file-name-display");
                 const fileName = this.files[0].name;
+                  const [file] = document.querySelector("#file-input").files
+                  if (file) {
+                    selected_img_for_upload.src = URL.createObjectURL(file)
+                  }
+
                 fileNameDisplay.textContent = `Selected file: ${fileName}`;
             });
         </script>

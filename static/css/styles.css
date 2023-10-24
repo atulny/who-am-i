@@ -67,15 +67,29 @@ body {
 }
 
 .-dim-2 {
-  width: 40vw;
-  height: 30vh;
+  position: relative;
+  width: 50vw;
+  height: 40vh;
+  background-color: #333;
+  background-size: cover;
+ padding: 4px;
 }
 
 .file-input-label {
-  font-size: 45px;
-  color: #cdcbcb;
+  font-size: 55px;
+  text-shadow: 2px 2px 1px #ccc;
+  color: #fff;
+  z-index: 2;
 }
-
+#selected_img_for_upload{
+  position: absolute;
+  width:auto;
+  max-width:50vw;
+  max-height:40vh;
+  z-index: 1;
+  margin: auto;
+  text-align: center;
+}
 .input-file:hover > .file-input-label{
   color: #fff;
 }
@@ -104,4 +118,15 @@ body {
   margin-top: 5px;
   font-size: 18px;
   margin-bottom: 14px;
+}
+
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  text-align: center;
+  font-size: 80%;
+  color:#eee;
 }

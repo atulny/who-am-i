@@ -22,7 +22,7 @@
 
 <!-- it will show video feed if image is not captured -->
 {% if image_data != '' %}
-<h3>Captured Image</h3>
+<h3>Image</h3>
     <img style='display:block; width:500px;height:auto;' id='base64image'
        src='{{ image_data_url }}' />
 
@@ -30,6 +30,9 @@
  {% endif %}
 <div>
     {{error_message}}
+</div>
+<div class="footer">
+    The content collected is only used for analysis and is not saved, persisted or distributed any shape or form.
 </div>
 
 <script>

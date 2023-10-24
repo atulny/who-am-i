@@ -12,7 +12,6 @@ import datetime
 import base64
 from PIL import Image
 from io import BytesIO
-from deepface import DeepFace
 
 
 app = Flask(__name__)
@@ -71,6 +70,7 @@ def capture():
     filename=''     # using filename variable to display video feed and captured image alternatively on the same page
     image_data_url = request.form.get('image')
     if request.method == 'POST':
+        from deepface import DeepFace
 
         # Decode the base64 data URL to obtain the image data
         #image_data = base64.b64decode(image_data_url.split(',')[1])
@@ -85,6 +85,9 @@ def capture():
             del objs["region"]
         except:
             pass
+        if objs and "emotion" in objs:
+            objs["emotion ( based on facial Expression)"] = objs["emotion"]
+            del objs["emotion"]
         image_result = json.dumps(objs,indent=2)
         # Create an image from the decoded data
         # img = Image.open(BytesIO(image_data))
@@ -117,6 +120,8 @@ def upload_image():
         sample_string =  'data:image/jpeg;base64,'+image_data_url.decode("ascii")
         #image = sample_string.split('\'')[1]
         print("posted --------------------")
+        from deepface import DeepFace
+
         objs = DeepFace.analyze(img_path=sample_string, enforce_detection=False,
                                 actions=('age', 'gender', 'race', 'emotion')
                                 )
@@ -126,6 +131,10 @@ def upload_image():
             del objs["region"]
         except:
             pass
+        if objs and "emotion" in objs:
+            objs["emotion ( based on facial Expression)"] = objs["emotion"]
+            del objs["emotion"]
+
         image_result = json.dumps(objs, indent=2)
         # if user does not select file, browser also submit an empty part without filename
         # if file.filename == '':
@@ -177,7 +186,7 @@ def allowed_images(filename):
 @app.errorhandler(Exception)
 def handle_error(error):
     print(error)
-    return render_template('error.html'), 404
+    return render_template('error.html', error=str(error)), 404
 
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
