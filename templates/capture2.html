@@ -23,7 +23,7 @@
 <!-- it will show video feed if image is not captured -->
 {% if image_data != '' %}
 <h3>Image</h3>
-    <img style='display:block; width:500px;height:auto;' id='base64image'
+    <img style='display:block; min-width:200px;width:auto;max-width:95vw;height:auto;max-height: 40vh' id='base64image'
        src='{{ image_data_url }}' />
 
     <pre style="text-align:left;">{{ image_data }}</pre>
@@ -45,7 +45,9 @@
     // Access the user's camera with rear camera preference
     navigator.mediaDevices.enumerateDevices()
     .then(devices => {
-        const rearCamera = devices.find(device => device.kind === 'videoinput' && device.label.toLowerCase().includes('back'));
+                console.log(devices.map(d=>d.label))
+
+        const rearCamera = devices.find(device => device.kind === 'videoinput' && device.label.toLowerCase().includes('front'));
         if (rearCamera) {
             return navigator.mediaDevices.getUserMedia({ video: { deviceId: rearCamera.deviceId } });
         } else {

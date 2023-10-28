@@ -37,7 +37,7 @@ body {
 }
 
 .container {
-  padding: 20px;
+  padding: 10px;
   color: #cdcbcb;
   background-color: #1b1b1b;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -57,6 +57,9 @@ body {
 .input-file{
   cursor: pointer;
 }
+.data-table{max-width: 90vw;width: fit-content;margin-bottom: 30px;}
+.data-table td{border:1px solid #ccc;padding:5px}
+.data-table th{border:1px solid #ccc;background-color: #333;padding:5px}
 
 #file-input{
   display: none;
@@ -65,7 +68,10 @@ body {
 #file-name-display{
   color: #fff;
 }
-
+#camera-feed{
+  max-width: 95%;
+  max-height: 40vh;
+}
 .-dim-2 {
   position: relative;
   width: 50vw;

@@ -1,0 +1,2 @@
+startup_command: streamlit run stapp.py --server.port 443
+

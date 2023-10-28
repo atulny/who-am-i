@@ -1,4 +1,5 @@
 import json
+import re
 
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
 # secure_filename is used to sanitize and secure filename before storing it
@@ -13,6 +14,7 @@ import base64
 from PIL import Image
 from io import BytesIO
 
+from util import format_json
 
 app = Flask(__name__)
 
@@ -79,16 +81,8 @@ def capture():
                                 actions=('age', 'gender', 'race', 'emotion')
                                 )
 
-        if objs:
-            objs=objs[0]
-        try:
-            del objs["region"]
-        except:
-            pass
-        if objs and "emotion" in objs:
-            objs["emotion ( based on facial Expression)"] = objs["emotion"]
-            del objs["emotion"]
-        image_result = json.dumps(objs,indent=2)
+        image_result = format_json(objs)
+
         # Create an image from the decoded data
         # img = Image.open(BytesIO(image_data))
         # # Generate a filename with the current date and time
@@ -125,17 +119,8 @@ def upload_image():
         objs = DeepFace.analyze(img_path=sample_string, enforce_detection=False,
                                 actions=('age', 'gender', 'race', 'emotion')
                                 )
-        if objs:
-            objs=objs[0]
-        try:
-            del objs["region"]
-        except:
-            pass
-        if objs and "emotion" in objs:
-            objs["emotion ( based on facial Expression)"] = objs["emotion"]
-            del objs["emotion"]
+        image_result = format_json(objs)
 
-        image_result = json.dumps(objs, indent=2)
         # if user does not select file, browser also submit an empty part without filename
         # if file.filename == '':
         #     error_message = 'image not selected'

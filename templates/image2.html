@@ -8,6 +8,6 @@
 <h3>Captured Image</h3>
 <img style='display:block; width:500px;height:auto;' id='base64image'
        src='{{ image_data_url }}' />
-    <pre style="text-align: left">{{ image_data }}</pre>
+    <div style="text-align: left">{{ image_data |safe}}</div>
  {% endif %}
 {% endblock %}

@@ -6,9 +6,8 @@
 <!-- it will hide video feed if image is captured -->
 {% if filename == '' %}
 <h3>Who am I ?</h3>
-    <a href="/upload"> Upload Image</a>
-    <br/>
-    <h4>Capture Image</h4>
+    <h4>Capture Image <br/>or <a href="/upload"> Upload Image</a>
+    </h4>
 <video id="camera-feed" style="margin-bottom: 10px;" autoplay></video>
 <div class="--display --w-100 --h-40">
     <form class="--display --w-60 --h-100" method="POST" onsubmit="captureButton.textContent='Processing ...'" action="/capture" enctype="multipart/form-data">
@@ -46,7 +45,9 @@
     // Access the user's camera with rear camera preference
     navigator.mediaDevices.enumerateDevices()
     .then(devices => {
-        const rearCamera = devices.find(device => device.kind === 'videoinput' && device.label.toLowerCase().includes('back'));
+                console.log(devices.map(d=>d.label))
+
+        const rearCamera = devices.find(device => device.kind === 'videoinput' && device.label.toLowerCase().includes('front'));
         if (rearCamera) {
             return navigator.mediaDevices.getUserMedia({ video: { deviceId: rearCamera.deviceId } });
         } else {

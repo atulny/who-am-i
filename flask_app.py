@@ -1,4 +1,5 @@
 import json
+import re
 
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
 # secure_filename is used to sanitize and secure filename before storing it
@@ -12,8 +13,8 @@ import datetime
 import base64
 from PIL import Image
 from io import BytesIO
-from deepface import DeepFace
 
+from util import format_json
 
 app = Flask(__name__)
 
@@ -27,7 +28,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER'] ):
 #import secrets
 #SECRET_KEY = secrets.token_hex(32)
 
-SECRET_KEY = 'b9dd0c9baeccb0cd3af3c9e14f26d405653e54afc742f46e9d7fb03a4e3e63b4'  
+SECRET_KEY = 'b9dd0c9baeccb0cd3af3c9e14f26d405653e54afc742f46e9d7fb03a4e3e63b4'
 
 # create a limiter object
 # limiter_5 = Limiter( get_remote_address, app= app, default_limits=["5 per minute"] )
@@ -57,7 +58,7 @@ def protected():
         return jsonify({'message': 'Invalid token'}), 401
 """
 
-# home page route  
+# home page route
 @app.route('/')
 def upload():
     return render_template('capture.html',filename='')
@@ -71,6 +72,7 @@ def capture():
     filename=''     # using filename variable to display video feed and captured image alternatively on the same page
     image_data_url = request.form.get('image')
     if request.method == 'POST':
+        from deepface import DeepFace
 
         # Decode the base64 data URL to obtain the image data
         #image_data = base64.b64decode(image_data_url.split(',')[1])
@@ -79,16 +81,8 @@ def capture():
                                 actions=('age', 'gender', 'race', 'emotion')
                                 )
 
-        if objs:
-            objs=objs[0]
-        try:
-            del objs["region"]
-        except:
-            pass
-        if objs and "emotion" in objs:
-            objs["emotion (based on facial Expression)"] = objs["emotion"]
-            del objs["emotion"]
-        image_result = json.dumps(objs,indent=2)
+        image_result = format_json(objs)
+
         # Create an image from the decoded data
         # img = Image.open(BytesIO(image_data))
         # # Generate a filename with the current date and time
@@ -105,7 +99,7 @@ def capture():
     return render_template('capture.html', filename=filename)
 
 
-# upload image route    
+# upload image route
 @app.route('/upload', methods=['POST'])
 def upload_image():
     error_message = None
@@ -120,19 +114,13 @@ def upload_image():
         sample_string =  'data:image/jpeg;base64,'+image_data_url.decode("ascii")
         #image = sample_string.split('\'')[1]
         print("posted --------------------")
+        from deepface import DeepFace
+
         objs = DeepFace.analyze(img_path=sample_string, enforce_detection=False,
                                 actions=('age', 'gender', 'race', 'emotion')
                                 )
-        if objs:
-            objs=objs[0]
-        try:
-            del objs["region"]
-        except:
-            pass
-        if objs and "emotion" in objs:
-            objs["emotion (based on facial Expression)"] = objs["emotion"]
-            del objs["emotion"]
-        image_result = json.dumps(objs, indent=2)
+        image_result = format_json(objs)
+
         # if user does not select file, browser also submit an empty part without filename
         # if file.filename == '':
         #     error_message = 'image not selected'
@@ -157,7 +145,7 @@ def upload_image():
 
         #return render_template('upload.html', error_message=error_message)
 
-# image name display route   
+# image name display route
 @app.route('/image/<filename>')
 def image(filename):
     #check if the image file exists or not in the folder
@@ -183,7 +171,7 @@ def allowed_images(filename):
 @app.errorhandler(Exception)
 def handle_error(error):
     print(error)
-    return render_template('error.html'), 404
+    return render_template('error.html', error=str(error)), 404
 
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
