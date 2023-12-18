@@ -41,6 +41,7 @@ body {
   color: #cdcbcb;
   background-color: #1b1b1b;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  psdding-bottom:35px;
 }
 
 .container h3 {
@@ -57,7 +58,7 @@ body {
 .input-file{
   cursor: pointer;
 }
-.data-table{max-width: 90vw;width: fit-content;margin-bottom: 30px;}
+.data-table{max-width: 90vw;width: fit-content;margin-top:5px;}
 .data-table td{border:1px solid #ccc;padding:5px}
 .data-table th{border:1px solid #ccc;background-color: #333;padding:5px}
 
