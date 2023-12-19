@@ -37,6 +37,8 @@ def format_json(objs,ex=False):
                                  table_attributes=table_attributes)
         image_result = re.sub(r'e-\d+', "0.00", image_result)
         image_result = re.sub(r'-?\d+\.\d+', fmt, image_result)
+        image_result = re.sub(r'%.00', "%", image_result)
+
         if ex:
             styles = """
             <style>
