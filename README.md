@@ -1,5 +1,8 @@
 ## NOTE*
 - When you visit first time on website it will take some time to load completely so please wait few minutes.  
+## http://who-am-i.co/
+
+
 # Image Upload and Capture for Demographics
 
 Welcome to the Demographics identification (Image Upload and Capture App) repository! 
@@ -11,9 +14,10 @@ and let the model predict their demographics.
 - **Image Upload**: Users can  upload images from their device's storage to the app.
  
 - **Camera Capture**:   The app allows users to use their device camera to capture pictures instantly, the captured image will automatically upload on server, providing a dynamic and interactive experience.
- 
+
+- **Demographics Prediction**:   The embedded model predicts the demographics
   
- 
+ ![img.png](img.png)
  
 ## Installation
 
