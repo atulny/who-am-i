@@ -48,7 +48,7 @@ st.write("Uplaod an Image or take a picture with camera")
 # import textwrap
 # import streamlit.components.v1 as components
 
-tab1,tab2 = st.tabs(["Uplaod an Image","Take a picture with camera"])
+tab1,tab2 = st.tabs(["Upload an Image","Take a picture with camera"])
 with tab1:
     uploaded_photo = st.file_uploader("Upload a photo", key="photo_upload")
     if uploaded_photo:

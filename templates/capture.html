@@ -10,7 +10,7 @@
     </h4>
 <video id="camera-feed" style="margin-bottom: 10px;" autoplay></video>
 <div class="--display --w-100 --h-40">
-    <form class="--display --w-60 --h-100" method="POST" onsubmit="captureButton.textContent='Processing ...'" action="/capture" enctype="multipart/form-data">
+    <form class="--display --w-60 --h-100" method="POST" onsubmit="captureButton.textContent='Image captured! Processing ...'" action="/capture" enctype="multipart/form-data">
         <div class="choose-file">
             <input type="hidden" name="image" id="file-input"/>
             <input type="submit" style="display: none;">
@@ -41,7 +41,7 @@
         const captureButton = document.getElementById("captureButton");
         const capturedImageInput = document.getElementById("file-input");
         const captureForm = document.getElementById("captureForm");
-    
+
     // Access the user's camera with rear camera preference
     navigator.mediaDevices.enumerateDevices()
     .then(devices => {
@@ -67,6 +67,7 @@
             canvas.height = video.videoHeight;
             const context = canvas.getContext("2d");
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            video.style.opacity = .2
 
             // Convert the captured image to a base64 data to save it as .png file
             const imageDataUrl = canvas.toDataURL("image/png");
