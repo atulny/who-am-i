@@ -1,6 +1,6 @@
 ## NOTE*
 - When you visit first time on website it will take some time to load completely so please wait few minutes.  
-# Image Upload and Capture App
+# Image Upload and Capture for Demographics
 
 Welcome to the Demographics identification (Image Upload and Capture App) repository! 
 With this app, users can easily upload images to the server and also capture photos using their device's camera, 
