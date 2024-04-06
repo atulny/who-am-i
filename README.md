@@ -34,4 +34,7 @@ This project is licensed under the MIT License.
 
 If you have any questions or suggestions, please feel free to contact  at "atulny@gmail.com" .
 
+### TODO
+Improve the sample/test data set to remove the age bias.
+
 Happy coding!
